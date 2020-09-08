@@ -1,0 +1,10 @@
+CREATE TABLE [dbo].[Products](
+	[productId] [int] IDENTITY(1001,1) NOT NULL,
+	[productName] [nvarchar](50) NOT NULL,
+	[productStock] [int] NOT NULL,
+	[productPrice] [int] NOT NULL,
+	[gametypeId] [int] NOT NULL,
+	[productAge] [nvarchar](50) NOT NULL,
+	[productLang] [nvarchar](50) NOT NULL,
+	[productImg] [varbinary](max) NOT NULL,
+)

@@ -1,0 +1,10 @@
+Use BoardGame;
+CREATE TABLE memberTest1(
+memberID int not null Primary Key IDENTITY(1000,1),
+memberAcc nvarchar(100) ,
+memberPwd nvarchar(100) 
+)
+
+Use BoardGame;
+INSERT INTO memberTest1(memberAcc,memberPwd)
+VALUES('acc1','pwd1'),('acc2','pwd2'),('acc3','pwd3'),('acc5','pwd5'),('acc6','pwd6');
