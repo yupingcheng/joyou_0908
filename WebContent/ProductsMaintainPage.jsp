@@ -8,65 +8,63 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
-<title>商品資料維護</title>
+<title>修改或刪除</title>
+<style>
+#bpaging{
+margin:0px auto;
+}
+</style>
 </head>
 <body>
 <c:set var="funcName" value="BMT" scope="session" />
-<div id='main'>
+<div>
 <center>${ BookDeleteMsg }<br>
 <c:remove var="BookDeleteMsg" />
-<div id="insert"><a href="<c:url value='ProductsInsert.jsp' />" >新增商品資料</a></div>
-<table border='2' width="690">
-	<TR>
-		<TD colspan='3'>
-		<TABLE width="680" BORDER='0'>
-			<TR height='5'>
-				<TD align='center'>&nbsp;</TD>
-			</TR>
-			<TR height='30'>
-				<TD align='center'><FONT size='+2'
-					style="font-weight: 900;"> 商品資料維護 </FONT></TD>
-			</TR>
-			<TR height='5'>
-				<TD align='center'>&nbsp;</TD>
-			</TR>
-		</TABLE>
-		</TD>
-	</TR>
-	<c:forEach varStatus="stVar" var="ProductBean" items="${products_DPP}">
-		<tr height='50'>
-			<td width='600' colspan='2' align='left'>
-			<table border='1' width='600'>
-				<tr>
-					<td width='600' align="left">商品：<a
-						href="BookPreUpdate.do?BOOKID=${ProductBean.productName}&pageNo=${pageNo}">${ProductBean.productName}</a>
+<div><a href="<c:url value='ProductsInsert.jsp' />" >修改或刪除商品資料</a></div>
 
-					</td>
-				</tr>
-			</table>
+<c:forEach varStatus="stVar" var="ProductBean" items="${products_DPP}">
+<table border='2' width="690" >
+		<tr height='60'>
+			<td rowspan="2" height='120' width='80'>
+			<img src="${pageContext.servletContext.contextPath}/showImgServlet.do?id=${ProductBean.productId}&type=Product">
 			</td>
-			<td rowspan='3' width='150'><!-- 
-                 getImage所對應的Servlet會到資料庫讀取圖片並傳送給前端的瀏覽器
-              --> <img height='100' width='80'
-				src='${pageContext.servletContext.contextPath}/_00_init/getImage?id=${aBookBean.bookId}&type=BOOK'>
-			</td>
+			<td colspan="3"width='500' align="left">商品名稱：<a href="BookPreUpdate.do?BOOKID=${ProductBean.productName}&pageNo=${pageNo}">${ProductBean.productName}</a>
 		</tr>
-		
-		<TR height='50'">
-			<TD width='600' align='left'>
-			<TABLE border='1' width='600'>
-				<TR>
-					<TD width='400' align="left">庫存：${ProductBean.productStock}</TD>
-					<TD width='200' align="left">價錢：${ProductBean.productPrice}</TD>
-				</TR>
-			</TABLE>
-			</TD>
-		</TR>
-	</c:forEach>
-</TABLE>
-</CENTER>
+		<tr height='60'>
+					<TD width='200' align="left">商品庫存：${ProductBean.productStock}</TD>
+					<TD width='200' align="left">商品定價：${ProductBean.productPrice}</TD>
+					<TD width='200' align="left">遊戲適齡：${ProductBean.productLang}</TD>
+		</tr>
+</table>
+</c:forEach>
+</center>
 </div>
-
-
+<center>
+<div id="bpaging">
+<br/><br/><br/><br/>
+<table border="1">
+	<tr align="center">
+		<td width='80' height='20'>
+			<div id="blfirst"><a
+				href="<c:url value='ProductsGetServlet.do?pageNo=1'/>">第一頁</a></div>
+		</td>
+		<td width='80'>
+			<div id="blprev">
+			<a href="<c:url value='ProductsGetServlet.do?pageNo=${pageNo-1}'/>">上一頁</a>
+			</div>
+		</td>
+		<td width='76'>${pageNo} / ${totalPages}</td>
+		<td width='80'>
+			<div id="blnext"><a
+				href="<c:url value='ProductsGetServlet.do?pageNo=${pageNo+1}' />">下一頁</a></div>
+		</td>
+		<td width='80'>
+			<div id="bllast"><a
+				href="<c:url value='ProductsGetServlet.do?pageNo=${totalPages}' />">最後</a></div>
+		</td>
+	</tr>
+</table>
+</div>
+</center>
 </body>
 </html>
