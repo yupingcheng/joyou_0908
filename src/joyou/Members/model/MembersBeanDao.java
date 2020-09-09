@@ -23,42 +23,51 @@ public class MembersBeanDao {
 		return null;
 	}
 
-	public boolean checkCorrectAccPwd(String account, String password) {
-		String hqlStr = "from MembersBean where memberAcc=:acc and memberPwd=:pwd";
+	public MembersBean selectbyAccount(String account) {
+		String hqlStr = "from MembersBean where memberAcc=:acc";
 		Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
-
 		query.setParameter("acc", account);
-		query.setParameter("pwd", password);
-
-		// true if account and password are correct
 		MembersBean resultAccount = query.uniqueResult();
+		if (resultAccount != null) {
+			return resultAccount;
+		}
+		return null;
+	}
 
+	public MembersBean selectbyMail(String mail) {
+		String hqlStr = "from MembersBean where memberMail=:mailbox";
+		Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
+		query.setParameter("mailbox", mail);
+		MembersBean resultAccount = query.uniqueResult();
+		if (resultAccount != null) {
+			return resultAccount;
+		}
+		return null;
+	}
+
+	public boolean checkCorrectAccPwd(String account, String password) {
+		MembersBean resultAccount = selectbyAccount(account);
+		if (resultAccount != null) {
+			return resultAccount.getPassword() == password;
+//			return resultAccount.getPassword()==md5(password);
+		}
+		return false;
+	}
+
+	public boolean checkDuplicateAccount(String account) {
+		MembersBean resultAccount = selectbyAccount(account);
 		if (resultAccount != null) {
 			return true;
 		}
-
 		return false;
-
 	}
 
-	public boolean checkDuplicateAcc(String account) {
-//	public boolean checkDuplicateAcc(String account,String mail) {
-		try {
-			String hqlStr = "from MembersBean where memberAcc=:acc";
-			// String hqlStr = "from MembersBean where memberAcc=:acc or membermail=:mail";
-			Query<MembersBean> query = session.createQuery(hqlStr, MembersBean.class);
-
-			query.setParameter("acc", account);
-
-			MembersBean resultAccount = query.uniqueResult();
-
-			if (resultAccount != null) {
-				return true;
-			}
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
+	public boolean checkDuplicateMail(String mail) {
+		MembersBean resultAccount = selectbyMail(mail);
+		if (resultAccount != null) {
+			return true;
 		}
 		return false;
 	}
+
 }

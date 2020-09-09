@@ -48,7 +48,7 @@ public class TestRegister extends HttpServlet {
 			userPwd = request.getParameter("userpwd");
 //			userName = request.getParameter("userName");
 //			userPhone = request.getParameter("userphone");
-//			userMail = request.getParameter("usermail");
+			userMail = request.getParameter("usermail");
 //			userGender = request.getParameter("usergender");
 //			userBirth = request.getParameter("userbirth");
 //			gameType = request.getParameter("gametype");
@@ -72,7 +72,8 @@ public class TestRegister extends HttpServlet {
 		session.beginTransaction();
 
 		MembersBeanDao md1 = new MembersBeanDao(session);
-		boolean result = md1.checkDuplicateAcc(userAcc);
+		boolean result = md1.checkDuplicateAccount(userAcc);
+		boolean result2 = md1.checkDuplicateMail(userMail);
 
 		if (userAcc.trim().equals("") || userPwd.trim().equals("")) {
 //		if (userAcc.trim().equals("") || userPwd.trim().equals("") || userName.trim().equals("") || userPhone.trim().equals("")
