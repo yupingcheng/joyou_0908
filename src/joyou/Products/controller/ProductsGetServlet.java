@@ -24,7 +24,28 @@ public class ProductsGetServlet extends HttpServlet {
       
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		SessionFactory factory = HibernateUtil.getSessionFactory();
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+		
+		
+		String pageStr = request.getParameter("pageNo");
+		if(pageStr==null) {
+			pageNo=1;
+		}else {
+			pageNo = Integer.parseInt(pageStr.trim());
+		}
+		
+		ProductsDao pDao = new ProductsDao(session);
+		List<ProductsBean> pageBean = pDao.selectByPage(pageNo);
+		int totalNo = pDao.getTotalPages();
+		request.setAttribute("products_DPP", pageBean);
+		request.setAttribute("pageNo", pageNo);
+		request.setAttribute("totalPages", totalNo);
+		session.getTransaction().commit();
+		request.getRequestDispatcher("ProductsMaintainPage.jsp").forward(request, response);
 	}
 
 	
@@ -39,14 +60,18 @@ public class ProductsGetServlet extends HttpServlet {
 		String pageStr = request.getParameter("pageNo");
 		if(pageStr==null) {
 			pageNo=1;
+		}else {
+			pageNo = Integer.parseInt(pageStr.trim());
 		}
-
+		
 		ProductsDao pDao = new ProductsDao(session);
 		List<ProductsBean> pageBean = pDao.selectByPage(pageNo);
-		session.getTransaction().commit();
+		int totalNo = pDao.getTotalPages();
 		request.setAttribute("products_DPP", pageBean);
-		request.getRequestDispatcher("ProductsMaintainPage.jsp").forward(request, response);;
-		
+		request.setAttribute("pageNo", pageNo);
+		request.setAttribute("totalPages", totalNo);
+		session.getTransaction().commit();
+		request.getRequestDispatcher("ProductsMaintainPage.jsp").forward(request, response);
 	}
 
 }

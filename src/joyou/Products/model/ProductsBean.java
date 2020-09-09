@@ -19,18 +19,20 @@ public class ProductsBean {
 	public Integer gametypeId;
 	public String productAge;
 	public String productLang;
+	public String imgName;
 	public Blob productImg; 
 	
 	public ProductsBean() {
 	}
 	public ProductsBean(String productName,Integer productStock,Integer productPrice,Integer gametypeId
-	,String productAge,String productLang,Blob productImg) {
+	,String productAge,String productLang,String imgName,Blob productImg) {
 		this.productName=productName;
 		this.productStock=productStock;
 		this.productPrice=productPrice;
 		this.gametypeId=gametypeId;
 		this.productAge=productAge;
 		this.productLang=productLang;
+		this.imgName=imgName;
 		this.productImg=productImg; 
 	}
 	
@@ -109,6 +111,15 @@ public class ProductsBean {
 		this.productLang = productLang;
 	}
 
+	@Column(name="imgname")
+	public String getImgName() {
+		return imgName;
+	}
+	
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+		
+	}
 	@Column(name="productimg")
 	public Blob getProductImg() {
 		return productImg;

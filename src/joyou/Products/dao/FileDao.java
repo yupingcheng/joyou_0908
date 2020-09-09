@@ -1,7 +1,5 @@
 package joyou.Products.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -12,6 +10,7 @@ import javax.sql.rowset.serial.SerialBlob;
 
 public class FileDao {
 	public static final int IMAGE_FILENAME_LENGTH = 20;
+
 
 	public static String getFileName(final Part part) {
 		for (String content : part.getHeader("content-disposition").split(";")) {
@@ -40,4 +39,5 @@ public class FileDao {
 		sb = new SerialBlob(b);
 		return sb;
 	}
+	
 }

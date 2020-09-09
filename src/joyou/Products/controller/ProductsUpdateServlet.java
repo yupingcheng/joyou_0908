@@ -108,7 +108,7 @@ public class ProductsUpdateServlet extends HttpServlet {
 				pDao.insert(pBean);
 			} else {
 				Blob fileBlob = FileDao.fileToBlob(is, sizeInBytes);
-				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang, fileBlob);
+				ProductsBean pBean = new ProductsBean(name, stock, price, gametype, age, lang,fileName, fileBlob);
 				pDao = new ProductsDao(session);
 				pDao.insert(pBean);
 			}
