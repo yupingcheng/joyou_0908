@@ -30,7 +30,7 @@ public class TestRegister extends HttpServlet {
 	private String userBirth;
 	private String gameType;
 //	private String md5Acc;
-	private String md5Pwd;
+//	private String md5Pwd;
 	private Session session;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,13 +46,13 @@ public class TestRegister extends HttpServlet {
 
 			userAcc = request.getParameter("userAcc");
 			userPwd = request.getParameter("userpwd");
-//			userName = request.getParameter("userName");
-//			userPhone = request.getParameter("userphone");
+			userName = request.getParameter("userName");
+			userPhone = request.getParameter("userPhone");
 			userMail = request.getParameter("usermail");
-//			userGender = request.getParameter("usergender");
-//			userBirth = request.getParameter("userbirth");
-//			gameType = request.getParameter("gametype");
-//			md5Acc = changeMD5(userAcc);
+			userGender = request.getParameter("userGender");
+			userBirth = request.getParameter("userBirth");
+			gameType = request.getParameter("gameType");
+//			md5Acc = changeMD5(userAcc)
 //			md5Pwd = changeMD5(userPwd);
 
 			checkInsertData(request, response);

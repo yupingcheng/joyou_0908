@@ -1,0 +1,8 @@
+
+td:nth-child(1) {
+  text-align: right;
+  color: red;
+}
+td:nth-child(2) {
+  text-align: left;
+}

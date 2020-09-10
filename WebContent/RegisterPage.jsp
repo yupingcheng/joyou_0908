@@ -1,132 +1,187 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<style>
-#title {
-	font-family: "微軟正黑體", "blod";
-	color: #3C3C3C;
-}
+  <head>
+  	<meta charset="UTF-8">
+    <title>Register Form</title>
+    <link rel="stylesheet" type="text/css" href="RegisterPage.css" />
+    <script>
 
-.login-page {
-	width: 450px;
-	padding: 8% 0 0;
-	margin: auto;
-}
 
-.form {
-	position: relative;
-	background: #FFFFFF;
-	max-width: 360px;
-	margin: 0 auto 100px;
-	padding: 45px;
-	text-align: center;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
-		rgba(0, 0, 0, 0.24);
-}
+      function checkAcc(){
+		        let Obj =document.getElementsByName("userAcc")[0];
+		        let ObjVal = Obj.value.replace(/\s*/g, "");
+		        let ObjValLen = ObjVal.length;
+		        let VerifyObj = document.getElementById("checkAccount");
+	
+		        if (ObjVal == "") {
+		          VerifyObj.innerHTML = "不能空白";
+		        } else if (ObjValLen < 6 || ObjValLen>15) {
+		          VerifyObj.innerHTML = "限制長度為6-15字";
+		        } else {
+		          if (/^[a-zA-z0-9]{6,15}$/.test(ObjVal)) {
+		            VerifyObj.innerHTML = "格式正確";
+		          } else {
+		            VerifyObj.innerHTML = "必須全為字母數字";
+		          }
+		        }
+            
+		        if(VerifyObj.innerHTML=="格式正確"){
+			        //do sql search
+			      }
+		  }
 
-.ip1 {
-	text-align: center;
-	font-family: "微軟正黑體";
-	outline: 0;
-	background: #f2f2f2;
-	width: 100%;
-	border: 0;
-	margin: 0 0 15px;
-	padding: 15px;
-	box-sizing: border-box;
-	font-size: 14px;
-}
+      function checkPwd(){
+		        let Obj =document.getElementsByName("userPwd")[0];
+		        let ObjVal = Obj.value.replace(/\s*/g, "");
+		        let ObjValLen = ObjVal.length;
+		        let VerifyObj = document.getElementById("checkPassword");
+	
+		        if (ObjVal == "") {
+		          VerifyObj.innerHTML = "不能空白";
+		        } else if (ObjValLen < 6 || ObjValLen>15) {
+		          VerifyObj.innerHTML = "限制長度為6-15字";
+		        } else {
+		          if (/^[a-zA-z0-9]{6,15}$/.test(ObjVal)) {
+		            VerifyObj.innerHTML = "格式正確";
+		          } else {
+		            VerifyObj.innerHTML = "必須全為字母數字";
+		          }
+		        }
+            checkPwd2();
+            
+		  }
 
-body {
-	background: #A3D1D1;
-	font-family: "微軟正黑體";
-}
+      function checkPwd2(){
+		        let Obj =document.getElementsByName("userPwd")[0];
+		        let ObjVal = Obj.value.replace(/\s*/g, "");
+            let Obj2 =document.getElementsByName("userPwd2")[0];
+            let ObjVal2= Obj2.value.replace(/\s*/g, "");
+            let VerifyObj = document.getElementById("checkPassword");
+		        let VerifyObj2 = document.getElementById("checkPassword2");
+            if(VerifyObj.innerHTML=="格式正確" && ObjVal==ObjVal2){
+              VerifyObj2.innerHTML="v";
+            }else{
+              VerifyObj2.innerHTML="密碼不符";
+            }
 
-.bot {
-	background: #3C3C3C;
-	color: white;
-	text-align: center;
-	font-family: "微軟正黑體";
-	width: 45%;
-	border: 0;
-	margin: 0 0 15px;
-	padding: 15px;
-	box-sizing: border-box;
-	font-size: 14px;
-}
+		  }
 
-span {
-	color: red;
-	height: 30px;
-	margin: 15px;
-}
+      function checkNickName(){
+            let Obj =document.getElementsByName("userName")[0];
+		        let ObjVal = Obj.value.replace(/\s*/g, "");
+		        let ObjValLen = ObjVal.length;
+		        let VerifyObj = document.getElementById("checkNickName");
+	
+		        if (ObjVal == "") {
+		          VerifyObj.innerHTML = "不能空白";
+		        } else if (ObjValLen < 2 || ObjValLen>15) {
+		          VerifyObj.innerHTML = "限制長度為6-15字";
+		        } else {
+		          if (/^[a-zA-z0-9\u4E00-\u9FFF_!.]{2,15}$/.test(ObjVal)) {
+		            VerifyObj.innerHTML = "格式正確";
+		          } else {
+		            VerifyObj.innerHTML = "必須全為字母數字中文_!.";
+		          }
+		        }
+      }
 
-.sel_wrap {
-	background: #f2f2f2;
-}
 
-.sel_wrap label {
-	padding-left: 10px;
-	font-size: 14px;
-	z-index: 2;
-	color: #6C6C6C;
-	line-height: 40px;
-	height: 40px;
-	display: block;
-}
+    	
+    </script>
+  </head>
 
-.sel_wrap .select {
-	width: 100%;
-	height: 40px;
-	color: #6C6C6C;
-	line-height: 40px;
-	background: #f2f2f2;
-	filter: alpha(opacity = 0);
-	cursor: pointer;
-	font-size: 14px;
-}
-</style>
-</head>
-<body>
-	<div class="login-page">
-		<div class="form">
-			<h1>會員註冊</h1>
-			<br />
-			<form action="MemberRegister.do" method="post">
-				<input class="ip1" type="text" name="usermail" placeholder="MAIL" />
-				<input class="ip1" type="text" name="userAcc" placeholder="ACCOUNT" />
-				<input class="ip1" type="password" name="userpwd" placeholder="PASSWORD" /> 
-				<input class="ip1" type="text" name="userName" placeholder="NAME" /> 
-				<input class="ip1" type="text" name="userphone" placeholder="PHONE" />
-				<div class="ip1">
-					<input type="radio" name="usergender" value="Male">Male 
-					<input type="radio" name="usergender" value="Female">Female
-				</div>
-				<input class="ip1" type="date" name="userbirth" placeholder="BIRTHDAY" />
-				<div class="sel_wrap">
-					<label>GAME PREFERENCE</label> <select class="select" name="gametype">
-						<option value="PartyGames">PartyGames</option>
-						<option value="StrategyGames">StrategyGames</option>
-						<option value="ThemeticGames">ThemeticGames</option>
-						<option value="WarGames">WarGames</option>
-						<option value="AbstractGames">AbstractGames</option>
-						<option value="CustomizableGames">CustomizableGames</option>
-					</select>
-				</div>
-				<p>
-					<span>${p}</span>
-				</p>
-					<input class="bot" type="submit" value="Submit" /> 
-					<input class="bot" type="reset" value="Reset" />
-				<p>
-					Already registered? <a href="LoginPage.jsp">Sign In!</a>
-				</p>
-			</form>
-		</div>
-	</div>
-</body>
+  <body>
+    <form action="MemberRegister.do" method="POST">
+      <table>
+        <caption>
+          	註冊頁面 *為必填項目 寬度叫邱奕豪調 格式像這樣 style="width:100px"
+        </caption>
+        <tr>
+          <td>*</td>
+          <td>Email :</td>
+          <td><input type="email" name="usermail" required /></td>
+          <td id="checkMail"></td>
+        </tr>
+        <tr>
+          <td>*</td>
+          <td></td>
+          <td>
+            <input type="submit" value="send" />
+            <input type="text" name="verified" style="width: 95px" />
+          </td>
+          <td id="checkMailCode"></td>
+        </tr>
+        <tr>
+          <td>*</td>
+          <td>Account :</td>
+          <td><input type="text" name="userAcc" onblur="checkAcc()" required /></td>
+          <td id="checkAccount"></td>
+        </tr>
+        <tr>
+          <td>*</td>
+          <td>Password :</td>
+          <td><input type="password" name="userPwd" style="width: 148px;" onblur="checkPwd()" required /></td>
+          <td id="checkPassword"></td>
+        </tr>
+        <tr>
+          <td>*</td>
+          <td>ConfirmPwd :</td>
+          <td><input type="password" name="userPwd2" style="width: 148px;" onblur="checkPwd2()" required /></td>
+          <td id="checkPassword2"></td>
+        </tr>
+        <tr>
+          <td>*</td>
+          <td>NickName :</td>
+          <td><input type="text" name="userName" onblur="checkNickName()"/></td>
+          <td id="checkNickName"></td>
+        </tr>
+
+		<tr>
+          <td></td>
+          <td>Birthday :</td>
+          <td><input type="text" name="userBirth" /></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Cellphone :</td>
+          <td><input type="text" name="userPhone" /></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td>Gender :</td>
+          <td style="text-align: left">
+            <input type="radio" name="userGender" value="m" />Male
+            <input type="radio" name="userGender" value="f" />Female
+          </td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td>Prefer :</td>
+          <td>
+            <select class="select" name="gameType" style="width: 175px">
+              <option value="PartyGames">PartyGames</option>
+              <option value="StrategyGames">StrategyGames</option>
+              <option value="ThemeticGames">ThemeticGames</option>
+              <option value="WarGames">WarGames</option>
+              <option value="AbstractGames">AbstractGames</option>
+              <option value="CustomizableGames">CustomizableGames</option>
+            </select>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+      <input type="submit" value="Submit" />
+      <p>
+		Already registered? <a href="LoginPage.jsp">Sign In!</a>
+	  </p>
+    </form>
+  </body>
 </html>
