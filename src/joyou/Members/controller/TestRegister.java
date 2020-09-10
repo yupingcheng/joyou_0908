@@ -72,30 +72,37 @@ public class TestRegister extends HttpServlet {
 		session.beginTransaction();
 
 		MembersBeanDao md1 = new MembersBeanDao(session);
-		boolean result = md1.checkDuplicateAccount(userAcc);
+		boolean result1 = md1.checkDuplicateAccount(userAcc);
 		boolean result2 = md1.checkDuplicateMail(userMail);
 
-		if (userAcc.trim().equals("") || userPwd.trim().equals("")) {
+		if (userAcc.trim().equals("") || userPwd.trim().equals("") || userMail.trim().equals("")) {
 //		if (userAcc.trim().equals("") || userPwd.trim().equals("") || userName.trim().equals("") || userPhone.trim().equals("")
 //				|| userMail.trim().equals("") || userGender.trim().equals("") || userBirth.trim().equals("") || gameType.trim().equals("")) {
 
 			request.setAttribute("p", "欄位不可空白");
 			request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
 
-		} else if (result) {
+		} else if (result1) {
 			request.setAttribute("p", "帳號重複"); // 設定傳值
 			request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
 
-		} else if (!result && userAcc != null && userAcc.length() > 0 && userPwd != null && userPwd.length() > 0) {
-//		} else if (!result && userAcc != null && userAcc.length() > 0 && userPwd != null && userPwd.length() > 0 && userName != null
+		} else if (result2) {
+			request.setAttribute("p", "信箱重複"); // 設定傳值
+			request.getRequestDispatcher("RegisterPage.jsp").forward(request, response);
+
+		} else if (!result1 && !result2 && userAcc != null && userAcc.length() > 0 && userPwd != null && userPwd.length() > 0) {
+//		} else if (!result1 && !result2 && userAcc != null && userAcc.length() > 0 && userPwd != null && userPwd.length() > 0 && userName != null
 //				&& userName.length() > 0 && userPhone != null && userPhone.length() > 0 && userMail != null && userMail.length() > 0
 //				&& userGender != null && userGender.length() > 0 && userBirth != null && userBirth.length() > 0 && gameType != null
 //				&& gameType.length() > 0) {
 
 			MembersBeanDao md2 = new MembersBeanDao(session);
-			MembersBean mBean = new MembersBean(userAcc, userPwd);
+			int rand1000to9999 = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
+			MembersBean mBean = new MembersBean(userAcc, userPwd, userMail, rand1000to9999);
 //			MemberBean mBean = new MemberBean(userAcc, userName, md5Pwd, userGender, userPhone, gameType, userMail, userBirth);
 			md2.insert(mBean);
+			TestMail mail = new TestMail();
+			mail.send(mBean);
 			session.getTransaction().commit();
 
 			request.setAttribute("p", "註冊成功請登入");

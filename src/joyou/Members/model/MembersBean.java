@@ -13,21 +13,27 @@ public class MembersBean {
 	private int id;
 	private String account;
 	private String password;
+	private String mail;
+	private int verified;
 
 	public MembersBean() {
 
 	}
 
-	public MembersBean(String account, String password) {
+	public MembersBean(String account, String password, String mail, int verified) {
 		this.account = account;
 		this.password = password;
+		this.mail = mail;
+		this.verified = verified;
 	}
 
-	public MembersBean(int id, String account, String password) {
-		this.id = id;
-		this.account = account;
-		this.password = password;
-	}
+//	public MembersBean(int id, String account, String password, String mail, int verified) {
+//		this.id = id;
+//		this.account = account;
+//		this.password = password;
+//		this.mail = mail;
+//		this.verified = verified;
+//	}
 
 	@Id
 	@Column(name = "memberID")
@@ -56,6 +62,24 @@ public class MembersBean {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name = "memberMail")
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	@Column(name = "memberVerified")
+	public int getVerified() {
+		return verified;
+	}
+
+	public void setVerified(int verified) {
+		this.verified = verified;
 	}
 
 }

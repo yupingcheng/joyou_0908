@@ -97,19 +97,18 @@ span {
 			<h1>會員註冊</h1>
 			<br />
 			<form action="MemberRegister.do" method="post">
+				<input class="ip1" type="text" name="usermail" placeholder="MAIL" />
 				<input class="ip1" type="text" name="userAcc" placeholder="ACCOUNT" />
 				<input class="ip1" type="password" name="userpwd" placeholder="PASSWORD" /> 
 				<input class="ip1" type="text" name="userName" placeholder="NAME" /> 
-				<input class="ip1" type="text" name="userphone" placeholder="PHONE" /> 
-				<input class="ip1" type="text" name="usermail" placeholder="MAIL" />
+				<input class="ip1" type="text" name="userphone" placeholder="PHONE" />
 				<div class="ip1">
 					<input type="radio" name="usergender" value="Male">Male 
 					<input type="radio" name="usergender" value="Female">Female
 				</div>
 				<input class="ip1" type="date" name="userbirth" placeholder="BIRTHDAY" />
 				<div class="sel_wrap">
-					<label>GAME PREFERENCE</label> <select class="select"
-						name="gametype">
+					<label>GAME PREFERENCE</label> <select class="select" name="gametype">
 						<option value="PartyGames">PartyGames</option>
 						<option value="StrategyGames">StrategyGames</option>
 						<option value="ThemeticGames">ThemeticGames</option>
@@ -121,8 +120,8 @@ span {
 				<p>
 					<span>${p}</span>
 				</p>
-				<input class="bot" type="submit" value="Submit" /> <input
-					class="bot" type="reset" value="Reset" />
+					<input class="bot" type="submit" value="Submit" /> 
+					<input class="bot" type="reset" value="Reset" />
 				<p>
 					Already registered? <a href="LoginPage.jsp">Sign In!</a>
 				</p>
