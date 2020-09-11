@@ -104,7 +104,7 @@ public class TestRegister extends HttpServlet {
 			TestMail mail = new TestMail();
 			mail.send(mBean);
 			session.getTransaction().commit();
-
+			session.close();
 			request.setAttribute("p", "註冊成功請登入");
 			request.getRequestDispatcher("LoginPage.jsp").forward(request, response);
 		}

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*"%>
 
 <!DOCTYPE html>
@@ -8,6 +9,57 @@
     <title>Register Form</title>
     <link rel="stylesheet" type="text/css" href="RegisterPage.css" />
     <script>
+      function queryAcc(){
+          let Obj =document.getElementsByName("userAcc")[0];
+          let VerifyObj = document.getElementById("checkAccount");
+
+          var xhr = new XMLHttpRequest();
+	      xhr.open("POST", "<c:url value='/CheckDuplicateAccountServlet' />", true);
+		  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	      xhr.send("account=" + Obj.value);
+		  var message = "";
+		  xhr.onreadystatechange = function() {
+				    // 伺服器請求完成
+              if (xhr.readyState == 4 && xhr.status == 200) {
+                  var result = JSON.parse(xhr.responseText);
+
+		          if (result.memberAccountisDuplicate == "false") {
+		              message = "帳號可用";
+		          } else {
+		              message = "帳號重複，請重新輸入帳號";
+		          }
+	              
+	              VerifyObj.innerHTML = "<font color='red' size='-2'>" + message + "</font>";
+	          }
+		  }
+      }
+
+      function queryMail(){
+    	  let Obj =document.getElementsByName("userMail")[0];
+          let VerifyObj = document.getElementById("checkMail");
+
+          var xhr = new XMLHttpRequest();
+		  xhr.open("POST", "<c:url value='/CheckDuplicateMailServlet' />", true);
+		  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		  xhr.send("mail=" + Obj.value);
+	      var message = "";
+		  xhr.onreadystatechange = function() {
+				    // 伺服器請求完成
+              if (xhr.readyState == 4 && xhr.status == 200) {
+                  var result = JSON.parse(xhr.responseText);
+
+		          if (result.memberAccountisDuplicate == "false") {
+		              message = "信箱可用";
+		          } else {
+		              message = "信箱重複，請重新輸入信箱";
+		          }
+	              
+	              VerifyObj.innerHTML = "<font color='red' size='-2'>" + message + "</font>";
+	          }
+		  }
+      }
+
+
 
 
       function checkAcc(){
@@ -18,10 +70,10 @@
 	
 		        if (ObjVal == "") {
 		          VerifyObj.innerHTML = "不能空白";
-		        } else if (ObjValLen < 6 || ObjValLen>15) {
+		        } else if (ObjValLen < 2 || ObjValLen>15) {
 		          VerifyObj.innerHTML = "限制長度為6-15字";
 		        } else {
-		          if (/^[a-zA-z0-9]{6,15}$/.test(ObjVal)) {
+		          if (/^[a-zA-z0-9]{2,15}$/.test(ObjVal)) {
 		            VerifyObj.innerHTML = "格式正確";
 		          } else {
 		            VerifyObj.innerHTML = "必須全為字母數字";
@@ -29,7 +81,7 @@
 		        }
             
 		        if(VerifyObj.innerHTML=="格式正確"){
-			        //do sql search
+			        queryAcc();
 			      }
 		  }
 
@@ -102,7 +154,7 @@
         <tr>
           <td>*</td>
           <td>Email :</td>
-          <td><input type="email" name="usermail" required /></td>
+          <td><input type="email" name="userMail" required /></td>
           <td id="checkMail"></td>
         </tr>
         <tr>
